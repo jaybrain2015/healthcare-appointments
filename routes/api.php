@@ -2,20 +2,16 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
-// Health check endpoint
-Route::get('/health', function () {
-    return response()->json([
-        'status' => 'success',
-        'message' => 'Healthcare API is running!',
-        'timestamp' => now(),
-        'database' => DB::connection()->getPdo() ? 'connected' : 'disconnected'
-    ]);
-});
+// Public routes (no authentication required)
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
 
-// Get all users (we'll protect this later)
-Route::get('/users', function () {
-    return response()->json([
-        'users' => \App\Models\User::all()
-    ]);
+// Protected routes (authentication required)
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+    Route::post('/logout', [AuthController::class, 'logout']);
 });

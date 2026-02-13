@@ -1,0 +1,34 @@
+### Variables
+@baseUrl = http://localhost:8000/api
+@token = 6|eAqfIkK3X7wGA5RM6w4Z9zcc8uNYCcZRsrmHCn86a3500437
+
+### 1. Register New User
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+  "name": "Sarah Codnnor",
+  "email": "sarah.conddnor.2026@example.com",
+  "password": "password123",
+  "password_confirmation": "password123"
+}
+
+### 2. Login User
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "password123"
+}
+
+### 3. Get Current User (Protected - Need Token)
+GET {{baseUrl}}/user
+Authorization: Bearer {{token}}
+
+### 4. Logout (Protected - Need Token)
+POST {{baseUrl}}/logout
+Authorization: Bearer {{token}}
+
+### 5. Try Protected Route Without Token (Should Fail)
+GET {{baseUrl}}/user
