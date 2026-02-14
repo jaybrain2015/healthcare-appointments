@@ -1,34 +1,49 @@
 ### Variables
 @baseUrl = http://localhost:8000/api
-@token = 6|eAqfIkK3X7wGA5RM6w4Z9zcc8uNYCcZRsrmHCn86a3500437
 
-### 1. Register New User
-POST {{baseUrl}}/register
+### 1. Get all doctors (should be empty initially)
+GET {{baseUrl}}/doctors
+
+### 2. Create first doctor
+POST {{baseUrl}}/doctors
 Content-Type: application/json
 
 {
-  "name": "Sarah Codnnor",
-  "email": "sarah.conddnor.2026@example.com",
-  "password": "password123",
-  "password_confirmation": "password123"
+  "name": "Dr. Sarah Smith",
+  "speciality": "Cardiology",
+  "email": "sarah.smith@medibook.com",
+  "phone": "+1-555-0101",
+  "license_number": "DOC-12345",
+  "bio": "Board-certified cardiologist with 15 years of experience",
+  "photo_url": "https://via.placeholder.com/150"
 }
 
-### 2. Login User
-POST {{baseUrl}}/login
+### 3. Create second doctor
+POST {{baseUrl}}/doctors
 Content-Type: application/json
 
 {
-  "email": "john@example.com",
-  "password": "password123"
+  "name": "Dr. Michael Johnson",
+  "specialty": "Neurology",
+  "email": "michael.johnson@medibook.com",
+  "phone": "+1-555-0102",
+  "license_number": "DOC-67890",
+  "bio": "Specialist in neurological disorders and brain surgery"
 }
 
-### 3. Get Current User (Protected - Need Token)
-GET {{baseUrl}}/user
-Authorization: Bearer {{token}}
+### 4. Get all doctors again (should show 2)
+GET {{baseUrl}}/doctors
 
-### 4. Logout (Protected - Need Token)
-POST {{baseUrl}}/logout
-Authorization: Bearer {{token}}
+### 5. Get specific doctor (ID 1)
+GET {{baseUrl}}/doctors/1
 
-### 5. Try Protected Route Without Token (Should Fail)
-GET {{baseUrl}}/user
+### 6. Update doctor
+PUT {{baseUrl}}/doctors/1
+Content-Type: application/json
+
+{
+  "bio": "Board-certified cardiologist with over 20 years of experience specializing in interventional cardiology"
+}
+
+### 7. Delete doctor
+DELETE {{baseUrl}}/doctors/2
